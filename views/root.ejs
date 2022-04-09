@@ -1,0 +1,11 @@
+<h1>Welcome!</h1>
+
+<% if (userId){ %>
+    <a href="/home">Home</a>
+    <form method="post" action="/logout">
+        <button>Logout</button>
+    </form>
+<% } else { %>
+    <a href="/login">Login</a>
+    <a href="/register">Register</a>
+<% } %>
