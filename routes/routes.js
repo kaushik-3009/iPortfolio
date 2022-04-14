@@ -5,11 +5,14 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 const { urlencoded } = require('body-parser');
 
-
 router.get('/portfolio', (req, res) => {
 	console.log('Hello from the portfolio page');
 	res.render('../views/portfolio.ejs');
 });
+
+
+
+
 
 router.get('/app-profile', (req, res) => {
 	console.log('Hello from the app-profile page');
@@ -31,12 +34,10 @@ router.get('/coin-details', (req, res) => {
 	res.render('../views/coin-details.ejs');
 });
 
-
 router.get('/market-capital', (req, res) => {
 	console.log('Hello from the market-capital page');
 	res.render('../views/market-capital.ejs');
 });
-
 
 const TWO_HOURS = 1000 * 60 * 60 * 2;
 
