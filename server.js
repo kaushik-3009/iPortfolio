@@ -3,13 +3,18 @@ const cors = require('cors');
 
 const express = require('express');
 const mongoose = require('mongoose');
+
 //const response = require('../config/responseSchema');
 // const model = require('../models/proschema')
 require('./auth/passport');
 const app = express();
 
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 8000;
+const moment = require('moment');
+const bodyParser = require('body-parser');
+app.use(bodyParser.urlencoded({ extended: true }));
 
+app.locals.moment = moment;
 require('./auth/passport');
 const DB_URL = process.env.DB_URI;
 const authRoutes = require('./routes/authRoutes.js');

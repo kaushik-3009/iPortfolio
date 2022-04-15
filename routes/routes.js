@@ -1,18 +1,40 @@
 const express = require('express');
 const router = express.Router();
 const ejs = require('ejs');
+const moment = require('moment');
+const math = require('math');
+const axios = require('axios');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const { urlencoded } = require('body-parser');
+const Note = require('../models/note');
+router.use(bodyParser.urlencoded({ extended: true }));
+
+router.get('/notes-main', async (req, res) => {
+	console.log('Hello from the notes page');
+	let notes = await Note.find({}).sort('-createdAt');
+	res.render('../views/notes-main.ejs', { notes });
+});
+
+router.get('/notes', (req, res) => {
+	console.log('Hello from the notes page');
+	res.render('../views/notes.ejs');
+});
+
+router.post('/create_note', async (req, res) => {
+	console.log(req);
+	const newNote = new Note({
+		title: req.body.title,
+		description: req.body.description,
+	});
+	newNote.save();
+	res.redirect('/notes-main');
+});
 
 router.get('/portfolio', (req, res) => {
 	console.log('Hello from the portfolio page');
 	res.render('../views/portfolio.ejs');
 });
-
-
-
-
 
 router.get('/app-profile', (req, res) => {
 	console.log('Hello from the app-profile page');
@@ -183,6 +205,41 @@ router.post('/logout', redirectLogin, (req, res) => {
 		res.clearCookie(session_Name);
 		res.redirect('/login');
 	});
+});
+
+router.get('/news', async (req, res) => {
+	try {
+		var url =
+			'http://newsapi.org/v2/everything?q=$crypto&' +
+			'apiKey=2c6bfa81c2e8403da6eff5d85b8d1432';
+		console.log('try block');
+		const news_get = await axios.get(url);
+		res.render('../views/news.ejs', {
+			articles: news_get.data.articles,
+		});
+	} catch (error) {
+		if (error.response) {
+			console.log(error);
+		}
+	}
+});
+
+router.post('/search', async (req, res) => {
+	const search = req.body.search;
+	// console.log(req.body.search)
+
+	try {
+		var url = `http://newsapi.org/v2/everything?q=${search}&apiKey=2c6bfa81c2e8403da6eff5d85b8d1432`;
+
+		const news_get = await axios.get(url);
+		res.render('../views/news.ejs', {
+			articles: news_get.data.articles,
+		});
+	} catch (error) {
+		if (error.response) {
+			console.log(error);
+		}
+	}
 });
 
 module.exports = router;
