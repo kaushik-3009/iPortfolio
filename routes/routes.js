@@ -8,58 +8,8 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 const { urlencoded } = require('body-parser');
 const Note = require('../models/note');
+const coinController = require('../controllers/coinapiController');
 router.use(bodyParser.urlencoded({ extended: true }));
-
-router.get('/notes-main', async (req, res) => {
-	console.log('Hello from the notes page');
-	let notes = await Note.find({}).sort('-createdAt');
-	res.render('../views/notes-main.ejs', { notes });
-});
-
-router.get('/notes', (req, res) => {
-	console.log('Hello from the notes page');
-	res.render('../views/notes.ejs');
-});
-
-router.post('/create_note', async (req, res) => {
-	console.log(req);
-	const newNote = new Note({
-		title: req.body.title,
-		description: req.body.description,
-	});
-	newNote.save();
-	res.redirect('/notes-main');
-});
-
-router.get('/portfolio', (req, res) => {
-	console.log('Hello from the portfolio page');
-	res.render('../views/portfolio.ejs');
-});
-
-router.get('/app-profile', (req, res) => {
-	console.log('Hello from the app-profile page');
-	res.render('../views/app-profile.ejs');
-});
-
-router.get('/chart-chartist', (req, res) => {
-	console.log('Hello from the chart-chartist page');
-	res.render('../views/chart-chartist.ejs');
-});
-
-router.get('/chart-chartjs', (req, res) => {
-	console.log('Hello from the chart-chartjs page');
-	res.render('../views/chart-chartjs.ejs');
-});
-
-router.get('/coin-details', (req, res) => {
-	console.log('Hello from the coin-details page');
-	res.render('../views/coin-details.ejs');
-});
-
-router.get('/market-capital', (req, res) => {
-	console.log('Hello from the market-capital page');
-	res.render('../views/market-capital.ejs');
-});
 
 const TWO_HOURS = 1000 * 60 * 60 * 2;
 
@@ -138,14 +88,11 @@ router.use((req, res, next) => {
 router.get('/', (req, res) => {
 	console.log('Homepage of admin panel');
 	const { userId } = req.session;
+
 	res.render('../views/root', { userId });
 });
 
-router.get('/home', redirectLogin, (req, res) => {
-	const { user } = res.locals;
-	console.log(req.sessionID);
-	res.render('../views/index', { user });
-});
+router.get('/home', redirectLogin, coinController.getPrice);
 
 // login route
 router.get('/login', redirectHome, (req, res) => {
@@ -207,8 +154,63 @@ router.post('/logout', redirectLogin, (req, res) => {
 	});
 });
 
-router.get('/news', async (req, res) => {
+router.get('/notes-main', redirectLogin, async (req, res) => {
+	const { user } = res.locals;
+	console.log('Hello from the notes page');
+	let notes = await Note.find({}).sort('-createdAt');
+	res.render('../views/notes-main.ejs', { notes, user });
+});
+
+router.get('/notes', redirectLogin, (req, res) => {
+	const { user } = res.locals;
+	console.log('Hello from the notes page');
+	res.render('../views/notes.ejs', { user });
+});
+
+router.post('/create_note', redirectLogin, async (req, res) => {
+	const { user } = res.locals;
+	console.log(req);
+	const newNote = new Note({
+		title: req.body.title,
+		description: req.body.description,
+	});
+	newNote.save();
+	res.redirect('/notes-main');
+});
+
+router.get('/portfolio', redirectLogin, (req, res) => {
+	const { user } = res.locals;
+	console.log('Hello from the portfolio page');
+	res.render('../views/portfolio.ejs', { user });
+});
+
+router.get('/app-profile', redirectLogin, (req, res) => {
+	const { user } = res.locals;
+	console.log('Hello from the app-profile page');
+	res.render('../views/app-profile.ejs', { user });
+});
+
+router.get('/chart-chartist', redirectLogin, (req, res) => {
+	console.log('Hello from the chart-chartist page');
+	res.render('../views/chart-chartist.ejs');
+});
+
+router.get('/chart-chartjs', redirectLogin, (req, res) => {
+	console.log('Hello from the chart-chartjs page');
+	res.render('../views/chart-chartjs.ejs');
+});
+
+router.get('/coin-details', redirectLogin, (req, res) => {
+	const { user } = res.locals;
+	console.log('Hello from the coin-details page');
+	res.render('../views/coin-details.ejs', { user });
+});
+
+router.get('/market-capital', coinController.getMarketPrice);
+
+router.get('/news', redirectLogin, async (req, res) => {
 	try {
+		const { user } = res.locals;
 		var url =
 			'http://newsapi.org/v2/everything?q=$crypto&' +
 			'apiKey=2c6bfa81c2e8403da6eff5d85b8d1432';
@@ -216,6 +218,7 @@ router.get('/news', async (req, res) => {
 		const news_get = await axios.get(url);
 		res.render('../views/news.ejs', {
 			articles: news_get.data.articles,
+			user,
 		});
 	} catch (error) {
 		if (error.response) {
@@ -224,7 +227,8 @@ router.get('/news', async (req, res) => {
 	}
 });
 
-router.post('/search', async (req, res) => {
+router.post('/search', redirectLogin, async (req, res) => {
+	const { user } = res.locals;
 	const search = req.body.search;
 	// console.log(req.body.search)
 
@@ -234,12 +238,17 @@ router.post('/search', async (req, res) => {
 		const news_get = await axios.get(url);
 		res.render('../views/news.ejs', {
 			articles: news_get.data.articles,
+			user,
 		});
 	} catch (error) {
 		if (error.response) {
 			console.log(error);
 		}
 	}
+});
+
+router.get('/successfulGoogleAuth', (req, res) => {
+	res.redirect('/home');
 });
 
 module.exports = router;

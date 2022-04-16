@@ -7,7 +7,7 @@
 	<meta name="viewport" content="width=device-width,initial-scale=1" />
 	<title>iPortfolio - Profile</title>
 	<!-- Favicon icon -->
-	<link rel="icon" type="image/png" sizes="16x16" href="./images/favicon.png" />
+	<link rel="icon" type="image/png" sizes="16x16" href="assets/images/logo60.png" />
 	<link href="./vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet" />
 	<link href="./css/style.css" rel="stylesheet" />
 </head>
@@ -86,7 +86,9 @@
 									<div class="profile card card-body px-3 pt-3 pb-0">
 										<div class="profile-head">
 											<div class="photo-content">
-												<div class="cover-photo"></div>
+												<div class="cover-photo">
+													<img src="images/banner.jpg">
+												</div>
 											</div>
 											<div class="profile-info">
 												<div class="profile-photo">
@@ -96,13 +98,13 @@
 												<div class="profile-details">
 													<div class="profile-name px-3 pt-2">
 														<h4 class="text-primary mb-0">
-															Kaushik Sanjay Prabhakar
+															<%= user.name %>
 														</h4>
 														<p>Web Developer</p>
 													</div>
 													<div class="profile-email px-2 pt-2">
 														<h4 class="text-muted mb-0">
-															kaushik@email.com
+															<%= user.email %>
 														</h4>
 														<p>Email</p>
 													</div>
@@ -181,9 +183,9 @@
 													Today Highlights
 												</h5>
 												<a href="javascript:void()" class="pull-right f-s-16">More</a>
-												<img src="images/profile/1.jpg" alt=""
+												<img src="images/highlights.jpeg" alt=""
 													class="img-fluid mt-4 mb-4 w-100" />
-												<h4>Darwin Creative Agency Theme</h4>
+												<h4>IWP Project</h4>
 												<p class="mb-0">
 													I worked with my team mates on our IWP project to develop and design
 													a website which can be used for tracking our investment in different
@@ -197,37 +199,43 @@
 												<div class="row mt-4">
 													<div class="col-lg-4 col-xl-4 col-sm-4 col-6 int-col">
 														<a href="javascript:void()" class="interest-cat">
-															<img src="images/profile/2.jpg" alt="" class="img-fluid" />
+															<img src="assets/images/btc.jpg" alt="" class="img-fluid"
+																height="100px" width="200px" />
 															<p>Shopping Mall</p>
 														</a>
 													</div>
 													<div class="col-lg-4 col-xl-4 col-sm-4 col-6 int-col">
 														<a href="javascript:void()" class="interest-cat">
-															<img src="images/profile/3.jpg" alt="" class="img-fluid" />
+															<img src="assets/images/eth.jpeg" height="100px"
+																width="200px" alt="" class="img-fluid" />
 															<p>Photography</p>
 														</a>
 													</div>
 													<div class="col-lg-4 col-xl-4 col-sm-4 col-6 int-col">
 														<a href="javascript:void()" class="interest-cat">
-															<img src="images/profile/4.jpg" alt="" class="img-fluid" />
+															<img src="assets/images/dogecoin.png" alt="" height="60px"
+																width="120px" />
 															<p>Art &amp; Gallery</p>
 														</a>
 													</div>
 													<div class="col-lg-4 col-xl-4 col-sm-4 col-6 int-col">
 														<a href="javascript:void()" class="interest-cat">
-															<img src="images/profile/2.jpg" alt="" class="img-fluid" />
+															<img src="assets/images/polkadot-parachain.jpg" alt=""
+																height="90px" width="176px" class="img-fluid" />
 															<p>Visiting Place</p>
 														</a>
 													</div>
 													<div class="col-lg-4 col-xl-4 col-sm-4 col-6 int-col">
 														<a href="javascript:void()" class="interest-cat">
-															<img src="images/profile/3.jpg" alt="" class="img-fluid" />
+															<img src="assets/images/shib.jpg" alt="" class="img-fluid"
+																height="100px" width="200px" />
 															<p>Shopping</p>
 														</a>
 													</div>
 													<div class="col-lg-4 col-xl-4 col-sm-4 col-6 int-col">
 														<a href="javascript:void()" class="interest-cat">
-															<img src="images/profile/4.jpg" alt="" class="img-fluid" />
+															<img src="assets/images/Solana_logo.png" alt=""
+																height="60px" width="100px" />
 															<p>Biking</p>
 														</a>
 													</div>
@@ -274,7 +282,7 @@
 																		class="btn btn-primary">Post</a>
 																</div>
 																<div class="profile-uoloaded-post border-bottom-1 pb-5">
-																	<img src="images/profile/8.jpg" alt=""
+																	<img src="assets/images/charity.jpg" alt=""
 																		class="img-fluid" />
 																	<a class="post-title" href="javascript:void()">
 																		<h4>

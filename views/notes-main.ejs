@@ -7,7 +7,7 @@
 	<meta name="viewport" content="width=device-width,initial-scale=1" />
 	<title>iPortfolio - Notes</title>
 	<!-- Favicon icon -->
-	<link rel="icon" type="image/png" sizes="16x16" href="./images/favicon.png" />
+	<link rel="icon" type="image/png" sizes="16x16" href="assets/images/logo60.png" />
 	<link href="./vendor/jqvmap/css/jqvmap.min.css" rel="stylesheet" />
 	<link rel="stylesheet" href="./vendor/chartist/css/chartist.min.css" />
 	<link href="./vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet" />
@@ -70,14 +70,15 @@
 					<!--**********************************
             Content body start
         ***********************************-->
+
 					<div class="content-body">
 						<!-- row -->
 						<a href="notes" class="btn btn-secondary"
-							style="background-color: #6418C3 ; border-color: #6418C3" ;>Create Note</a>
+							style="background-color: #6418C3 ; border-color: #6418C3; margin: 30px" ;>Create Note</a>
 
 						<% notes.forEach(note=>
 							{ %>
-							<div class="card mt-2">
+							<div class="card mt-2" style="margin: 30px">
 								<div class="card-body">
 									<h5 class="card-title">
 										<%= note.title %>
@@ -90,7 +91,6 @@
 							<%}) %>
 
 					</div>
-
 					<!--**********************************
             Content body end
         ***********************************-->
@@ -98,7 +98,7 @@
 					<!--**********************************
             Footer start
         ***********************************-->
-			
+
 
 					<!--**********************************
            Support ticket button start

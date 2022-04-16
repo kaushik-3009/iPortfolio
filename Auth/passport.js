@@ -21,6 +21,7 @@ const checkIfUserExists = async (profile, cb) => {
 			process.env.TOKEN_SECRET
 		);
 		profile.isNew = false;
+		
 	} else {
 		const newUser = new User({
 			email: profile._json.email,
@@ -44,7 +45,6 @@ passport.use(
 			callbackURL: '/auth/google/callback',
 		},
 		function (accessToken, refreshToken, profile, cb) {
-			console.log('here');
 			checkIfUserExists(profile, cb);
 		}
 	)

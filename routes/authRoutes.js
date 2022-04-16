@@ -15,7 +15,7 @@ router.get(
 	}),
 	function (req, res) {
 		res.redirect(
-			`${process.env.FRONTEND_URL}/successfulGoogleAuth?token=${req.user.jwt}?isNew=${req.user.isNew}`
+			`${process.env.FRONTEND_URL}/successfulGoogleAuth?name=${req.user._json.name}?email=${req.user._json.email}`
 		);
 	}
 );
@@ -29,6 +29,7 @@ router.get(
 	'/github/callback',
 	passport.authenticate('github', { failureRedirect: '/failed' }),
 	function (req, res) {
+		
 		res.redirect(
 			`${process.env.FRONTEND_URL}/successfulGithubAuth?token=${req.user.jwt}?isNew=${req.user.isNew}`
 		);
